@@ -1,11 +1,12 @@
-import 'dart:io';
+import 'dart:convert';
 
-import 'package:flutter/material.dart';
+import 'package:flutter_all_widgets/shop/product_model.dart';
 import 'package:flutter_all_widgets/shop/shop_service.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class ShopingController extends GetxController {
+  List<product> products = []; // List of products
   //homeservice _homeservice = homeservice();
   late Homeservice homeservice;
   @override
@@ -20,7 +21,12 @@ class ShopingController extends GetxController {
     try {
       http.Response response = await homeservice.getproduct();
       if (response.statusCode == 200) {
-        print(response.body);
+        var productdata = jsonDecode(response.body);
+        for (var i = 0; i < productdata.length; i++) {
+          products.add(product.fromJson(productdata[i]));
+        }
+        print(products);
+        update();
       }
     } catch (e) {
       print(e);
