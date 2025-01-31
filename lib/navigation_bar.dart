@@ -20,7 +20,7 @@ class buttomnavbarState extends State<buttomnavbar> {
     GridviewBuilderCustom(),
     ShopingPage(),
   ];
-  var seletedIndex = 0;
+  var seletedIndex = 4;
 
   void ontap(index) {
     setState(() {
