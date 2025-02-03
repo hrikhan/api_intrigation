@@ -9,7 +9,13 @@ class Homeservice {
 
   Future<http.Response> getcategories() async {
     String url = "https://fakestoreapi.com/products/categories";
-    http.Response response=await http.get(Uri.parse(url));
+    http.Response response = await http.get(Uri.parse(url));
+    return response;
+  }
+
+  Future<http.Response> specificationCategories(String categories) async {
+    String url = "https://fakestoreapi.com/products/category/${categories}";
+    http.Response response = await http.get(Uri.parse(url));
     return response;
   }
 }

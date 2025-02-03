@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ShimmarEffect extends StatelessWidget {
   const ShimmarEffect({super.key});
@@ -11,7 +12,10 @@ class ShimmarEffect extends StatelessWidget {
       ),
       itemCount: 10,
       itemBuilder: (BuildContext context, int index) {
-        return  Container(
+        return Shimmer.fromColors(
+          baseColor: Colors.grey[100]!,
+          highlightColor: Colors.grey,
+          child:  Container(
            height: 120,
            width: 180,
            margin: EdgeInsets.all(8),
@@ -29,7 +33,7 @@ class ShimmarEffect extends StatelessWidget {
             
              
            ),
-        );
+        ));
       },
     );
   }

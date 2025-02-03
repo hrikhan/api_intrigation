@@ -9,14 +9,17 @@ import 'package:http/http.dart' as http;
 class ShopingController extends GetxController {
   List<product> products = []; // List of products
   List<String> categories = []; // List of categories
+  List<product> specificcatagories = []; // List of
   bool isloading = false;
+  bool iscatagoriesfound = false;
   late Homeservice homeservice;
 
   @override
   void onInit() {
     homeservice = Homeservice();
-    getproduct();
     getcategory();
+    getproduct();
+
     super.onInit();
   }
 
@@ -32,6 +35,7 @@ class ShopingController extends GetxController {
         }
 
         isloading = false;
+
         print(products);
         update();
       }
@@ -61,5 +65,23 @@ class ShopingController extends GetxController {
       print(e);
     }
     isloading = false;
+  }
+
+  void specification_catagories(String categories) async {
+    try {
+      iscatagoriesfound = true;
+      http.Response response =
+          await homeservice.specificationCategories(categories);
+      if (response.statusCode == 200) {
+        var catagoriesspefic = json.decode(response.body);
+        for (var i = 0; i < catagoriesspefic.length; i++) {
+          specificcatagories.add(product.fromJson(catagoriesspefic[i]));
+          iscatagoriesfound = false;
+          update();
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }
