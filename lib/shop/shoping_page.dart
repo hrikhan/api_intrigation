@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_all_widgets/shop/catagories.dart';
 import 'package:flutter_all_widgets/shop/shimmar_effect.dart';
 import 'package:flutter_all_widgets/shop/shoping_controller.dart';
 import 'package:get/get.dart';
@@ -26,35 +27,49 @@ class ShopingPage extends StatelessWidget {
               SizedBox(
                 height: 60,
                 child: GetBuilder<ShopingController>(builder: (context) {
-                  return ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: shopingController.categories.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: InkWell(
-                          child: Container(
-                            height: 60,
-                            width: 200,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                color: Colors.blue),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Center(
-                                  child: Text(
-                                shopingController.categories[index].toUpperCase(),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold),
-                              )),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  );
+                  return shopingController.iscatagoriesfound
+                      ? listshimmar()
+                      : ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: shopingController.categories.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: InkWell(
+                                onTap: () {
+                                  print(
+                                      "Selected Category: ${shopingController.categories[index]}");
+                                  shopingController.specification_catagories(
+                                      shopingController.categories[index]);
+                                  Get.to(Catagories(
+                                    catagoriesname: shopingController
+                                        .categories[index]
+                                        .toUpperCase(),
+                                  ));
+                                },
+                                child: Container(
+                                  height: 60,
+                                  width: 200,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25),
+                                      color: Colors.blue),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Center(
+                                        child: Text(
+                                      shopingController.categories[index]
+                                          .toUpperCase(),
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
                 }),
               ),
               Padding(
@@ -130,7 +145,7 @@ class ShopingPage extends StatelessWidget {
                                           height: 7,
                                         ),
                                         Text(
-                                            "rating${product.rating!.rate.toString()}"),
+                                            "rating: ${product.rating!.rate.toString()}"),
                                         SizedBox(
                                           height: 7,
                                         ),
