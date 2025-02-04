@@ -12,6 +12,7 @@ class ShopingController extends GetxController {
   List<product> specificcatagories = []; // List of
   bool isloading = false;
   bool iscatagoriesfound = false;
+  bool justcatagoriesfound = false;
   late Homeservice homeservice;
 
   @override
@@ -46,7 +47,7 @@ class ShopingController extends GetxController {
 
   void getcategory() async {
     try {
-      isloading = true;
+      justcatagoriesfound = true;
       update();
       http.Response response = await homeservice.getcategories();
       if (response.statusCode == 200) {
@@ -64,7 +65,7 @@ class ShopingController extends GetxController {
     } catch (e) {
       print(e);
     }
-    isloading = false;
+    justcatagoriesfound = false;
   }
 
   void specification_catagories(String categories) async {
